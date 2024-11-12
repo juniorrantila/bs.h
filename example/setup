@@ -1,7 +1,7 @@
 #if 0
 set -e
-clang++ -xc++ $0 -o /tmp/setup && /tmp/setup
-echo build: created build/build.ninja
+clang++ -std=c++17 -xc++ $0 -o /tmp/setup && /tmp/setup
+echo setup: created build/build.ninja
 exit 0
 #endif
 #include "../bs.h"
@@ -12,7 +12,7 @@ int main()
     setup("build");
     FILE* ninja = fopen("build/build.ninja", "w");
     if (ninja == 0) {
-        perror("build: could not open build/build.ninja");
+        perror("setup: could not open build/build.ninja");
         return 1;
     }
     emit_ninja(ninja, all_targets);
