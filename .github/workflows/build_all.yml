@@ -1,0 +1,47 @@
+name: Build all
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  Ubuntu:
+    if: github.event_name != 'schedule' || github.repository == 'juniorrantila/bs.h'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Fetch tags and unshallow
+        run: git fetch --unshallow --tags
+
+      - name: Install packages
+        run: |
+          sudo apt-get update
+          sudo apt-get -y install clang ccache ninja-build
+
+      - name: Setup and build
+        run: |
+          cd example
+          ./setup
+          ninja -C build
+
+  MacOS:
+    if: github.event_name != 'schedule' || github.repository == 'juniorrantila/bs.h'
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Fetch tags and unshallow
+        run: git fetch --unshallow --tags
+
+      - name: Install packages
+        run: brew install ninja ccache
+
+      - name: Setup and build
+        run: |
+          cd example
+          ./setup
+          ninja -C build
