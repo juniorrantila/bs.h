@@ -1,0 +1,15 @@
+#include "../bs.h"
+#include "./Hello/build.def"
+
+static auto const example = target([]{
+    return cpp_binary("example", {
+        .srcs = glob("*.cpp"),
+        .compile_flags = {},
+        .linker_flags = {},
+        .target_triple = system_target_triple(),
+        .deps = {
+            hello,
+        },
+    });
+});
+
