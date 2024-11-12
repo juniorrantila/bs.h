@@ -380,7 +380,7 @@ static TargetRule ninja_rule(TargetRule rule)
 
 static inline TargetRule cxx_rule = ninja_rule({
     .name = "cxx",
-    .command = "ccache clang++ -target $target $args -MD -MQ $out -MF $depfile -o $out -c $in",
+    .command = "clang++ -target $target $args -MD -MQ $out -MF $depfile -o $out -c $in",
     .description = "Compiling $language object $out",
     .variables = {
         (Variable){
@@ -772,40 +772,8 @@ static inline Targets flatten_targets(Target target)
 static inline Strings default_cxx_args(void)
 {
     return (Strings){
-        "-Werror=return-type",
-        "-Werror=switch",
-        "-Werror",
-        "-Wformat=2",
-        "-Wimplicit-fallthrough",
-        "-Wmissing-declarations",
-        "-Wmissing-prototypes",
-        "-Wno-c99-designator",
-        "-Wno-c99-extensions",
-        "-Wno-expansion-to-defined",
-        "-Wno-format-pedantic",
-        "-Wno-gnu-anonymous-struct",
-        "-Wno-gnu-designator",
-        "-Wno-gnu-case-range",
-        "-Wno-gnu-conditional-omitted-operand",
-        "-Wno-gnu-statement-expression",
-        "-Wno-gnu-zero-variadic-macro-arguments",
-        "-Wno-implicit-const-int-float-conversion",
-        "-Wno-invalid-offsetof",
-        "-Wno-keyword-macro",
-        "-Wno-literal-suffix",
-        "-Wno-nested-anon-types",
-        "-Wno-unknown-warning-option",
-        "-Wno-unused-command-line-argument",
-        "-Wno-user-defined-literals",
-        "-Wsuggest-override",
-        "-fstrict-flex-arrays=2",
-        "-Wno-c23-extensions",
-        "-g3",
-        "-gdwarf",
-        "-gfull",
-        "-gmodules",
-        "-glldb",
-        "-fno-omit-frame-pointer",
+        "-Wall",
+        "-Wextra",
         "-fcolor-diagnostics",
     };
 }
@@ -813,14 +781,14 @@ static inline Strings default_cxx_args(void)
 static inline Strings default_cpp_args(void)
 {
     auto args = default_cxx_args();
-    args.entries[len(args.entries)] = "-std=c++20";
+    args.entries[len(args.entries)] = "-std=c++17";
     return args;
 }
 
 static inline Strings default_c_args(void)
 {
     auto args = default_cxx_args();
-    args.entries[len(args.entries)] = "-std=c23";
+    args.entries[len(args.entries)] = "-std=11";
     args.entries[len(args.entries)] = "-xc";
     return args;
 }

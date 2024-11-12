@@ -20,7 +20,7 @@ jobs:
       - name: Install packages
         run: |
           sudo apt-get update
-          sudo apt-get -y install clang ccache ninja-build
+          sudo apt-get -y install clang ninja-build
 
       - name: Setup and build
         run: |
@@ -38,7 +38,7 @@ jobs:
         run: git fetch --unshallow --tags
 
       - name: Install packages
-        run: brew install ninja ccache
+        run: brew install ninja
 
       - name: Setup and build
         run: |
